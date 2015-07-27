@@ -1,0 +1,22 @@
+Initialize engine version: 4.3.3f1 (c8ca9b6b9936)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.4052]
+    Renderer: NVIDIA GeForce 9800 GT  
+    Vendor:   NVIDIA
+    VRAM:     1136 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+- Completed reload, in  0.194 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: C:\Users\Gunner\Documents\UT_Task\BUILD\run_Data\Managed\Boo.Lang.dll (this message is harmless)
