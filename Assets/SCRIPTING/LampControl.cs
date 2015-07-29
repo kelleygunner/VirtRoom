@@ -4,31 +4,38 @@ using System.Collections;
 public class LampControl : MonoBehaviour 
 {
 	
+	#region parts & lights
 	public Transform SHTAT1;
 	public Transform SHTAT2;
-	public Transform LAMP;
-	
+	public Transform LAMP;	
 	public Transform UPOR1;
 	public Transform UPOR2;
-	
 	public Light LIG1;
 	public Light LIG2;
 	
-	bool isShtat1Control=false;
-	bool isShtat2Control=false;
-	bool isLampControl=false;
+	public GameObject SWICH_BUTTON;
+	
+	Transform ObjControlled = null;
+	int PartNumber = -1;
+	#endregion
 	
 	RaycastHit hit;
 	Ray ray;
 	
 	float mouse_y_pos=0;
 	
+	string[] LampPartNames;
+	
+	float[,] part_turn_options = new float[,]{{310,100},{50,40},{330,50}}; //средний угол; максимальное отклонение от среднего угла;
+	
+	float speed = 1;
+	
 	void Start () 
 	{
-		LIG1.enabled = false;
-		LIG2.enabled = false;
-	}
-	
+		LampPartNames = new string[]{LAMP.gameObject.name, SHTAT1.gameObject.name, SHTAT2.gameObject.name};
+		
+		speed = 10.0f/Screen.height; //установим зависимость скорости от высоты экрана
+	}	
 	
 	
 	void Update () 
@@ -39,23 +46,16 @@ public class LampControl : MonoBehaviour
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray,out hit))
 			{
-				if (hit.collider.gameObject.name=="Lamp")
+				int index = System.Array.IndexOf(LampPartNames,hit.collider.gameObject.name);
+
+				if (index!=-1)
 				{
-					isLampControl=true;
-					mouse_y_pos = Input.mousePosition.y;
-				}
-				if (hit.collider.gameObject.name=="Shtat1")
-				{
-					isShtat1Control=true;
-					mouse_y_pos = Input.mousePosition.y;
-				}
-				if (hit.collider.gameObject.name=="Shtat2")
-				{
-					isShtat2Control=true;
+					ObjControlled = hit.collider.transform;
+					PartNumber=index;
 					mouse_y_pos = Input.mousePosition.y;
 				}
 				
-				if (hit.collider.gameObject.name=="Place")
+				if (hit.collider.gameObject.name==SWICH_BUTTON.name)
 				{
 					LIG1.enabled = !LIG1.enabled;
 					LIG2.enabled = !LIG2.enabled;
@@ -64,63 +64,36 @@ public class LampControl : MonoBehaviour
 			
 		}
 		
-		
-		if (!Input.GetMouseButton(0))
+		if (Input.GetMouseButtonUp(0))
 		{
-			isLampControl=false;
-			isShtat1Control=false;
-			isShtat2Control=false;
+			ObjControlled = null;
+			PartNumber=-1;
 		}
 		
-		if (isLampControl)
-		{
-			
-			if (Input.mousePosition.y > mouse_y_pos)
-			{
-				if (LAMP.transform.localRotation.eulerAngles.z > 260 || LAMP.transform.localRotation.eulerAngles.z < 100 )LAMP.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*0.02f );
-			}
-			else
-			{
-				if (LAMP.transform.localRotation.eulerAngles.z < 65 || LAMP.transform.localRotation.eulerAngles.z > 200)LAMP.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*0.02f );
-			}
-			
-		}
-		
-		
-		if (isShtat1Control)
-		{
-			
-			if (Input.mousePosition.y > mouse_y_pos)
-			{
-				if (SHTAT1.transform.localRotation.eulerAngles.z > 15 )SHTAT1.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*0.02f );
-			}
-			else
-			{
-				if (SHTAT1.transform.localRotation.eulerAngles.z < 80 )SHTAT1.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*0.02f );
-			}
-			
-			
-			UPOR2.localRotation = Quaternion.Euler( Vector3.forward*(185-SHTAT1.transform.localRotation.eulerAngles.z/2.2f));
-			UPOR1.localRotation = Quaternion.Euler( Vector3.forward*(-6+SHTAT1.transform.localRotation.eulerAngles.z/1.5f));
-			
-		}
-		
-		if (isShtat2Control)
-		{
-			
-			if (Input.mousePosition.y < mouse_y_pos)
-			{
-				if (SHTAT2.transform.localRotation.eulerAngles.z > 300 || SHTAT2.transform.localRotation.eulerAngles.z < 100 )SHTAT2.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*-0.02f );
-			}
-			else
-			{
-				if (SHTAT2.transform.localRotation.eulerAngles.z < 20 || SHTAT2.transform.localRotation.eulerAngles.z > 200)SHTAT2.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*-0.02f );
-			}
-			
-			Debug.Log(SHTAT2.transform.localRotation.eulerAngles.z.ToString("n"));
-			
-		}
-		
+		if (PartNumber>-1)MoveLampPart();
 		
 	}
+	
+	void MoveLampPart ()
+	{
+		//
+		if ( 
+			Mathf.DeltaAngle(part_turn_options[PartNumber,0],ObjControlled.transform.localRotation.eulerAngles.z)//расчитываем отклонение
+			* Mathf.Sign(mouse_y_pos - Input.mousePosition.y)//меняем знак в зависимости от напрвления движения по экрану
+			< part_turn_options[PartNumber,1] //сравниваем с максимальным отклонением
+			)
+			ObjControlled.transform.Rotate(Vector3.forward* (mouse_y_pos - Input.mousePosition.y)*speed );
+		
+		if (PartNumber==1)
+		{
+			//Нижеследующие формулы получены путем проеобразований вычислений равных углов
+			//равнобедренного треугольника. Длина упоров равна => углы между упорами и штативами
+			//одинаковы и равны (180 - угол между штативами) => каждый из них равен половине этого значения
+			
+			UPOR1.localRotation =  Quaternion.Euler( Vector3.forward*( 0 - SHTAT1.localRotation.eulerAngles.z/2)*-1);
+			UPOR2.localRotation = Quaternion.Euler( Vector3.forward* ( (180 - SHTAT1.localRotation.eulerAngles.z/2)));
+		}
+		
+	}
+
 }

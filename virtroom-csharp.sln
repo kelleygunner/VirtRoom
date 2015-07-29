@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{1BDAF171-543A-D99C-5D6C-74A143D4EF05}") = "virtroom", "Assembly-CSharp-firstpass-vs.csproj", "{635EE18B-15A5-47A3-574B-C46D229C4504}"
+EndProject
+Project("{1BDAF171-543A-D99C-5D6C-74A143D4EF05}") = "virtroom", "Assembly-CSharp-vs.csproj", "{92FA291D-5783-BC27-FC9C-35F1950A15BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{635EE18B-15A5-47A3-574B-C46D229C4504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{635EE18B-15A5-47A3-574B-C46D229C4504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{635EE18B-15A5-47A3-574B-C46D229C4504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{635EE18B-15A5-47A3-574B-C46D229C4504}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92FA291D-5783-BC27-FC9C-35F1950A15BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92FA291D-5783-BC27-FC9C-35F1950A15BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92FA291D-5783-BC27-FC9C-35F1950A15BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92FA291D-5783-BC27-FC9C-35F1950A15BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+		GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.IndentWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

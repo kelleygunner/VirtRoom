@@ -29,12 +29,12 @@ public class CameraPath : MonoBehaviour
 	
 	float[] TIMES = new float[]
 	{
-		5.0f,
-		5.0f,
-		5.0f,
-		5.0f,
-		4.0f,
-		3.0f
+		1.0f,
+		1.0f,
+		1.0f,
+		1.0f,
+		1.0f,
+		1.0f
 	};
 	
 	Vector3 ROT=Vector3.zero;

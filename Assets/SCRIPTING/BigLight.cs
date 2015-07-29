@@ -6,19 +6,20 @@ public class BigLight : MonoBehaviour
 	RaycastHit hit;
 	Ray ray;
 	
-	public Light BIG_LIGHT;
-	public Light LL_LIGHT;
+	public Light BIG_LIGHT; //верхний свет
+	public Light LL_LIGHT; //лампочка на выключателе
 	
-	public Transform BUTTON;
+	public Transform BUTTON; //клавиша переключателя
 	
-	public static bool isSwitchOn=true;
+	float button_angle = 80; //угол поворота клавиши выключателя
+	
+	
 	
 	void Start () 
 	{
-		isSwitchOn = true;
 		BIG_LIGHT.enabled=true;
 		LL_LIGHT.enabled=false;
-		BUTTON.localRotation = Quaternion.Euler(Vector3.right*83);
+		BUTTON.localRotation = Quaternion.Euler(Vector3.right*button_angle);
 	}
 	
 
@@ -29,13 +30,13 @@ public class BigLight : MonoBehaviour
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray,out hit))
 			{
-				if (hit.collider.gameObject.name=="BLSwitch")
+				if (hit.collider.gameObject.name==BUTTON.gameObject.name)
 				{
-					isSwitchOn=!isSwitchOn;
-					BIG_LIGHT.enabled = isSwitchOn;
-					LL_LIGHT.enabled = !isSwitchOn;
-					if (isSwitchOn)BUTTON.localRotation = Quaternion.Euler(Vector3.right*83);
-					else BUTTON.localRotation = Quaternion.Euler(Vector3.right*-83);
+					BIG_LIGHT.enabled = !BIG_LIGHT.enabled;
+					LL_LIGHT.enabled = !LL_LIGHT.enabled;
+					
+					if (BIG_LIGHT.enabled)BUTTON.localRotation = Quaternion.Euler(Vector3.right*button_angle);
+					else BUTTON.localRotation = Quaternion.Euler(Vector3.right*-1*button_angle);
 				}
 			}
 			
