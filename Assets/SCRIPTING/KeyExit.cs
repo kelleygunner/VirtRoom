@@ -19,7 +19,7 @@ public class KeyExit : MonoBehaviour
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray,out hit))
 			{
-				if (hit.collider.gameObject.name=="key")
+				if (hit.collider.gameObject.name==this.gameObject.name)
 				{
 					Application.Quit();
 				}

@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\SCRIPTING\BigLight.cs" />
      <Compile Include="Assets\SCRIPTING\CameraPath.cs" />
+     <Compile Include="Assets\SCRIPTING\Frame.cs" />
      <Compile Include="Assets\SCRIPTING\KeyExit.cs" />
      <Compile Include="Assets\SCRIPTING\LampControl.cs" />
      <Compile Include="Assets\SCRIPTING\LoadingScene.cs" />

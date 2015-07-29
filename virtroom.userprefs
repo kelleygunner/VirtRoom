@@ -1,11 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SCRIPTING\KeyExit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SCRIPTING\CameraPath.cs">
     <Files>
-      <File FileName="Assets\SCRIPTING\BigLight.cs" Line="9" Column="35" />
-      <File FileName="Assets\SCRIPTING\LampControl.cs" Line="74" Column="3" />
-      <File FileName="Assets\SCRIPTING\CameraPath.cs" Line="37" Column="4" />
-      <File FileName="Assets\SCRIPTING\KeyExit.cs" Line="1" Column="1" />
+      <File FileName="Assets\SCRIPTING\CameraPath.cs" Line="71" Column="21" />
+      <File FileName="Assets\SCRIPTING\Frame.cs" Line="16" Column="22" />
+      <File FileName="..\Users\Kelley\Desktop\virtroom\Assets\SCRIPTING\CameraPath.cs" Line="67" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

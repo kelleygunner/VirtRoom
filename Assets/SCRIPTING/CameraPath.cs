@@ -6,89 +6,68 @@ public class CameraPath : MonoBehaviour
 	
 	public GUIStyle txtStyle;
 	
-	Vector3[] POSITIONS = new Vector3[]
+	Frame[] FRAMES = new Frame[6]
 	{
-		new Vector3(0,0,-10),
-		new Vector3(-0.5f,0.5f,-1.3f),
-		new Vector3(-2.9f,-1.0f,-3.5f),
-		new Vector3(0.5f,-2.5f,-11),
-		new Vector3(-1.31f,-5.42f,-5.3f),
-		new Vector3(0.0f,-2.5f,-12)
-		
+		#region Ключевые точки
+		new Frame(new Vector3(0,0,-10),new Vector3(20,0,0),5,"Добро Пожаловать в \'Виртуальную Комнату\'!"),
+		new Frame(new Vector3(-0.5f,0.5f,-1.3f),new Vector3(10,18,0),5,"Для включения/выключения щелкните мышью по выключателю."),
+		new Frame(new Vector3(-2.9f,-1.0f,-3.5f),new Vector3(18f,1.0f,0),4,"Чтобы покинуть комнату нажмите на ключ."),
+		new Frame(new Vector3(0.5f,-2.5f,-11),new Vector3(10,0,0),5,"Управляйте стойками и лампой с помощью мыши."),
+		new Frame(new Vector3(-1.31f,-5.42f,-5.3f),new Vector3(33.2f,36.1f,0),4,"Кликните мышью по кнопке, чтобы включить/отключить светильник."),
+		new Frame(new Vector3(0.0f,-2.5f,-12),new Vector3(10,0,0),3,"by Ivanov Anatoly")
+		#endregion
 	};
 	
-	Vector3[] ROTATION = new Vector3[]
-	{
-		new Vector3(20,0,0),
-		new Vector3(10,18,0),
-		new Vector3(18f,1.0f,0),
-		new Vector3(10,0,0),
-		new Vector3(33.2f,36.1f,0),
-		new Vector3(10,0,0)
-	};
-	
-	float[] TIMES = new float[]
-	{
-		1.0f,
-		1.0f,
-		1.0f,
-		1.0f,
-		1.0f,
-		1.0f
-	};
-	
-	Vector3 ROT=Vector3.zero;
+	Vector3 TargetPosition;
+	Vector3 TargetRotation;
+	Vector3 ROTATION=Vector3.zero;
+	string TargetMessage;
 	
 	int FRAME_CURRENT=0;
 	int FRAME_TOTAL=0;
 	
-	float TIMER=0;
+	Transform cam;	
 	
+	//Регулируем резкость камеры
+	[Range(0.01f,0.05f)]
+	public float move_speed=0.02f;
+	[Range(0.02f,0.07f)]
+	public float rotate_speed=0.05f;
+
 	void Start () 
 	{
-		FRAME_TOTAL = POSITIONS.Length;
-		ROT = this.transform.rotation.eulerAngles;
+		cam = Camera.main.transform;	
 		
+		FRAME_TOTAL = FRAMES.Length;
+		
+		StartCoroutine(MoveCamera());
+
 		txtStyle.fontSize = (int)(Screen.height*0.04f);
 	}
 	
 	
+	IEnumerator MoveCamera()
+	{
+		for (FRAME_CURRENT=0; FRAME_CURRENT<FRAME_TOTAL; FRAME_CURRENT++)
+		{
+			TargetMessage = FRAMES[FRAME_CURRENT]._message;
+			TargetPosition = FRAMES[FRAME_CURRENT]._position;
+			TargetRotation = FRAMES[FRAME_CURRENT]._rotation;
+			yield return new WaitForSeconds (FRAMES[FRAME_CURRENT]._time);
+		}
+	}
+	
 	void Update () 
 	{
-		if (FRAME_CURRENT<FRAME_TOTAL)
-		{
-			
-			TIMER += Time.deltaTime;
-					
-			this.transform.position += (POSITIONS[FRAME_CURRENT]-this.transform.position)*0.05f*(TIMER/TIMES[FRAME_CURRENT])*(Time.deltaTime*50);
-			
-			ROT += (ROTATION[FRAME_CURRENT]-this.transform.rotation.eulerAngles)*0.05f*(Time.deltaTime*50);
-				
-			this.transform.rotation = Quaternion.Euler( ROT );
-			
-			if (TIMER>=TIMES[FRAME_CURRENT]){FRAME_CURRENT++; TIMER=0;}
-		}
+		//обновим позишн
+		cam.position += (TargetPosition-cam.position)*move_speed;
+		//обновим угол
+		ROTATION += (TargetRotation-cam.eulerAngles)*rotate_speed;		
+		cam.rotation = Quaternion.Euler( ROTATION );
 	}
 	
 	void OnGUI()
 	{
-		if (FRAME_CURRENT==0)
-			GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),
-				"Добро Пожаловать в \'Виртуальную Комнату\'!",txtStyle);
-		
-		if (FRAME_CURRENT==1)
-			GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),
-				"Для включения/выключения щелкните мышью по выключателю.",txtStyle);
-		
-		if (FRAME_CURRENT==2)
-			GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),
-				"Чтобы покинуть комнату нажмите на ключ.",txtStyle);
-		if (FRAME_CURRENT==3)
-			GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),
-				"Управляйте стойками и лампой с помощью мыши.",txtStyle);
-		if (FRAME_CURRENT==4)
-			GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),
-				"Кликните мышью по кнопке, чтобы включить/отключить светильник.",txtStyle);
-			
+		if (FRAME_CURRENT<FRAME_TOTAL) GUI.Label ( new Rect(Screen.width*0.2f,Screen.height*0.7f,Screen.width*0.6f,Screen.height*0.2f),TargetMessage,txtStyle);
 	}
 }
